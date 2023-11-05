@@ -1,6 +1,6 @@
 # React To-Do List App
 
-![To-Do List App Interface](./images/layout.png)
+![To-Do List App Interface](./images/design.png)
 
 **Table of Contents**
 - [Features](#features)

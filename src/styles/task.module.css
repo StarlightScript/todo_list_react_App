@@ -1,0 +1,40 @@
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.2rem 0.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid gray;
+}
+
+.task p {
+  font-size: 0.9rem;
+}
+
+.task input {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  color: rgb(0, 128, 255);
+  outline: none;
+  width: 360px;
+}
+
+.task button {
+  font-weight: bold;
+  color: rgb(0, 128, 255);
+  background-color: white;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid rgb(0, 128, 255);
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.task span {
+  cursor: pointer;
+}
+
+.task .icons {
+  cursor: pointer;
+}

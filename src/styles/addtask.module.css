@@ -1,0 +1,25 @@
+.inputElm {
+  display: grid;
+  grid-template-columns: 2fr 0.5fr;
+  margin-top: 1.2rem;
+}
+
+.inputElm input {
+  border: none;
+  background-color: rgb(238, 235, 235);
+  padding: 0.6rem;
+  border-radius: 1rem;
+  outline: none;
+}
+
+.inputElm button {
+  border: none;
+  background-color: rgb(0, 128, 255);
+  color: white;
+  font-weight: bold;
+  padding: 0.6rem;
+  border-radius: 1rem;
+  margin-left: -20px;
+  box-shadow: -3px 0px 2px rgb(165, 160, 160);
+  cursor: pointer;
+}

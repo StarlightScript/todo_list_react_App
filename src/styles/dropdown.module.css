@@ -1,0 +1,19 @@
+.dropdown-content {
+  position: absolute;
+  background-color: #fff;
+  min-width: 60px;
+  border-radius: 8px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content p {
+  color: black;
+  border-radius: 10px;
+  padding: 6px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content p:hover {
+  background-color: #f1f1f1;
+}

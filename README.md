@@ -33,6 +33,7 @@ The app will be available at http://localhost:3000/.
 
 ## Technologies Used
 - React
+- Redux tookit
 - CSS
 
 ## Contributing

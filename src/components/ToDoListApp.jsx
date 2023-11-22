@@ -2,6 +2,7 @@ import React from 'react';
 import Task from './Task';
 import AddTask from './AddTask';
 import TaskListOverview from './TaskListOverview';
+import { LuListTodo } from 'react-icons/lu';
 import { useSelector } from 'react-redux';
 import { selectTasks } from '../features/tasks/tasksSlice';
 
@@ -10,7 +11,7 @@ const ToDoListApp = () => {
   
   return (
     <div className='container'>
-      <h3>To Do List 📝</h3>
+      <h3><LuListTodo /> To Do List</h3>
       <AddTask />
       <TaskListOverview />
       <div className='tasks'>

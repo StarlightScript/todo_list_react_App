@@ -1,37 +1,46 @@
 import styles from '../styles/task.module.css';
-import React, { useState, useContext } from 'react';
-import { App } from './ToDoListApp';
+import React, { useState } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { MdClose, MdOutlinePublishedWithChanges } from 'react-icons/md';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import Dropdown from './Dropdown';
 import { Alert, Confirm } from 'react-st-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteTask, modifyTaskDescription, modifyTaskState, selectAllTasks } from '../features/tasks/tasksSlice';
 
 const Task = ({task}) => {
-  const {tasks, setTasks} = useContext(App);
+  const dispatch = useDispatch();
+  const tasks = useSelector(selectAllTasks)
+
   const [showDropdown, setShowDropdown] = useState(false);
   const [modifyTask, setModifyTask] = useState(false);
   const [modifiedTask, setModifiedTask] = useState(task.description);
 
-  const addModifiedTask = () => {
+  const modify = () => {
     if (modifiedTask.trim() === '') {
       Alert('The field cannot be epmty', 'Warning', 'Ok');
     } else if (tasks.filter(t => t.description.toLowerCase() === modifiedTask.trim().toLowerCase() && t.id !== task.id).length > 0) {
       Alert('This task already exists', 'Warning', 'Ok');
     } else {
-      setTasks(tasks.map(t => t.id === task.id ? ({...t, description: modifiedTask.trim()}) : t));
+      dispatch(modifyTaskDescription({
+        id: task.id,
+        description: modifiedTask.trim()
+      }));
 
       setModifyTask(false);
     }
   };
 
   const changeState = () => {
-    setTasks(tasks.map(t => t.id === task.id ? ({...t, completed: !t.completed}) : t));
+    dispatch(modifyTaskState({
+      id: task.id,
+      completed: !task.completed
+    }))
   };
 
   const removeTask = async () => {
     const handleRemove = await Confirm('Are you sure to delete this task ?', 'Confirmation', 'Delete', 'Cancel');
-    handleRemove && setTasks(tasks.filter(t => t.id !== task.id));
+    handleRemove && dispatch(deleteTask({id: task.id}));
   };
 
 
@@ -44,7 +53,7 @@ const Task = ({task}) => {
       </p>
       { modifyTask ?
         <div className={styles.icons}>
-          <MdOutlinePublishedWithChanges onClick={addModifiedTask} style={{color: 'rgb(0, 128, 255)'}} />
+          <MdOutlinePublishedWithChanges onClick={modify} style={{color: 'rgb(0, 128, 255)'}} />
         </div> :
         <div className={styles.icons}>
           {

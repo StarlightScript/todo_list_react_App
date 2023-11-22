@@ -1,25 +1,27 @@
 import styles from '../styles/addtask.module.css';
-import React, { useContext, useState } from 'react';
-import { App } from './ToDoListApp';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Alert } from 'react-st-modal';
+import { addTask, selectAllTasks } from '../features/tasks/tasksSlice';
+import uuid from 'react-uuid';
 
 const AddTask = () => {
-  const {tasks, setTasks} = useContext(App);
+  const dispatch = useDispatch();
+  const tasks = useSelector(selectAllTasks);
+  
   const [newTask, setNewTask] = useState('');
 
-  const addTask = () => {
-    const prevId = tasks.length > 0 ? tasks[tasks.length - 1].id : -1;
-
+  const add = () => {
     if (newTask.trim() === '') {
       Alert('Enter a valid task', 'Warning', 'Ok');
     } else if (tasks.filter(t => t.description.toLowerCase() === newTask.trim().toLowerCase()).length > 0) {
       Alert('This task already exists', 'Warning', 'Ok');
     } else {
-      setTasks([...tasks, {
-        id: prevId + 1,
+      dispatch(addTask({
+        id: uuid(),
         description: newTask.trim(),
         completed: false 
-      }]);
+      }));
 
       setNewTask('');
       document.getElementById('newTask').focus();
@@ -28,8 +30,14 @@ const AddTask = () => {
 
   return (
     <div className={styles.inputElm}>
-      <input type="text" id='newTask' placeholder='Enter your task' value={newTask} onChange={e => setNewTask(e.target.value)}/>
-      <button onClick={addTask}> Add </button>
+      <input 
+        type="text" 
+        id='newTask'
+        placeholder='Enter your task' 
+        value={newTask} 
+        onChange={e => setNewTask(e.target.value)}
+      />
+      <button onClick={add}> Add </button>
     </div>
   );
 }

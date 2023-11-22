@@ -1,11 +1,14 @@
 import styles from '../styles/tasklistoverview.module.css';
-import React, { useContext, useState } from 'react';
-import { App } from './ToDoListApp';
+import React, { useState } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { MdClose } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { modifyTasksState, selectAllTasks, setFilter } from '../features/tasks/tasksSlice';
 
 const TaskListOverview = () => {
-  const {tasks, setTasks, setShowAll, setShowCompleted} = useContext(App);
+  const dispatch = useDispatch();
+  const tasks = useSelector(selectAllTasks);
+
   const [checked, setChecked] = useState(false);
 
   const stats = [
@@ -16,26 +19,20 @@ const TaskListOverview = () => {
 
   const checkAll = () => {
     setChecked(true);
-    setTasks(tasks => tasks.map(task => ({...task, completed: true})));
+    dispatch(modifyTasksState(true));
   };
 
   const uncheckAll = () => {
     setChecked(false);
-    setTasks(tasks => tasks.map(task => ({...task, completed: false})));
+    dispatch(modifyTasksState(false));
   };
 
   return (
     <div className={styles.nav}>
       <ul className={styles.stats}>
-        <li onClick={() => {setShowAll(true)}}> All ({stats[0]}) </li>
-        <li onClick={() => {
-          setShowAll(false); 
-          setShowCompleted(true)}}
-        > Completed ({stats[1]}) </li>
-        <li onClick={() => {
-          setShowAll(false); 
-          setShowCompleted(false)}}> 
-          Pending ({stats[2]}) </li>
+        <li onClick={() => dispatch(setFilter('all'))}> All ({stats[0]}) </li>
+        <li onClick={() => dispatch(setFilter('completed'))}> Completed ({stats[1]}) </li>
+        <li onClick={() => dispatch(setFilter('pending'))}> Pending ({stats[2]}) </li>
       </ul>
       { !checked ?
         <button onClick={checkAll}> Check All <AiOutlineCheck /> </button> :
